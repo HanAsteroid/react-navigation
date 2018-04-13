@@ -4,7 +4,7 @@
 
 import React from 'react';
 
-import { Animated, Platform, StyleSheet, View } from 'react-native';
+import { Animated, Platform, StyleSheet, View,Dimensions } from 'react-native';
 
 import HeaderTitle from './HeaderTitle';
 import HeaderBackButton from './HeaderBackButton';
@@ -32,10 +32,32 @@ type HeaderState = {
     [key: string]: number,
   },
 };
+const X_WIDTH = 375;
+const X_HEIGHT = 812;
 
+// screen
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
+export function isIphoneX() {
+  return (
+    Platform.OS === 'ios' &&
+    ((SCREEN_HEIGHT === X_HEIGHT && SCREEN_WIDTH === X_WIDTH) ||
+      (SCREEN_HEIGHT === X_WIDTH && SCREEN_WIDTH === X_HEIGHT))
+  )
+}
+export function handleStausBarHeight() {
+  if(isIphoneX()){
+    return 44
+  }
+  return Platform.OS === 'ios' || Platform.Version >= 21 ? 20 : 0;
+}
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
+// const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
+const STATUSBAR_HEIGHT = handleStausBarHeight();
 const TITLE_OFFSET = Platform.OS === 'ios' ? 70 : 40;
+// const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
+// const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
+// const TITLE_OFFSET = Platform.OS === 'ios' ? 70 : 40;
 
 class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
   static HEIGHT = APPBAR_HEIGHT + STATUSBAR_HEIGHT;
@@ -159,14 +181,14 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
   _renderTitle(props: SceneProps, options: *): ?React.Element<*> {
     const style = {};
 
-    if (Platform.OS === 'android') {
-      if (!options.hasLeftComponent) {
-        style.left = 0;
-      }
-      if (!options.hasRightComponent) {
-        style.right = 0;
-      }
-    }
+    // if (Platform.OS === 'android') {
+    //   if (!options.hasLeftComponent) {
+    //     style.left = 0;
+    //   }
+    //   if (!options.hasRightComponent) {
+    //     style.right = 0;
+    //   }
+    // }
 
     return this._renderSubView(
       { ...props, style },
