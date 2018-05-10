@@ -53,7 +53,7 @@ export function handleStausBarHeight() {
 }
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
 // const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
-const STATUSBAR_HEIGHT = handleStausBarHeight();
+const STATUSBAR_HEIGHT = Platform.Version >= 21 ? 20 : 0;
 const TITLE_OFFSET = Platform.OS === 'ios' ? 70 : 40;
 // const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
 // const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
